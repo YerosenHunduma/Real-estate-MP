@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="bg-[#1C274C] h-20 text-white">
+    <header className="bg-[#232830] h-20 text-white">
       <div className="flex justify-between items-center p-3 max-w-6xl">
-        <span className="text-font-bold text-sm sm:text-xl">YS</span>
+        <span className="font-extrabold text-sm sm:text-xl">YS</span>
         <form className="bg-white p-3 rounded text-[#1C274C] flex items-center">
           <input
             type="text"
@@ -15,15 +15,19 @@ function Header() {
           ></input>
           <FaSearch />
         </form>
-        <ul className="flex gap-5">
+        <ul className="flex gap-5 ">
           <Link to={"/"}>
-            <li className="hidden sm:inline">Home</li>
+            <li className="hidden sm:inline font-extrabold hover:underline">
+              Home
+            </li>
           </Link>
           <Link to={"/about"}>
-            <li className="hidden sm:inline">About</li>
+            <li className="hidden sm:inline font-extrabold hover:underline">
+              About
+            </li>
           </Link>
           <Link to={"/signup"}>
-            <li>Sign Up</li>
+            <li className="font-extrabold hover:underline">Sign Up</li>
           </Link>
         </ul>
       </div>
