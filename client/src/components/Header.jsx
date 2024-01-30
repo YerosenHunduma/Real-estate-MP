@@ -26,8 +26,8 @@ function Header() {
               About
             </li>
           </Link>
-          <Link to={"/signup"}>
-            <li className="font-extrabold hover:underline">Sign Up</li>
+          <Link to={"/login"}>
+            <li className="font-extrabold hover:underline">Sign In</li>
           </Link>
         </ul>
       </div>

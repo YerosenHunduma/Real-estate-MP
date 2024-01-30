@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { RegisterUser } from "../apiCalls/user";
 
 function SignUP() {
   const [formData, setformData] = useState({});
@@ -19,16 +20,17 @@ function SignUP() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post("/api/auths/signup", formData);
-      console.log(data);
-      if (data.success === false) {
+      console.log(formData);
+      const response = await RegisterUser(formData);
+      console.log(response);
+      if (response.success === false) {
         setLoading(false);
-        setError(data.message);
+        setError(response.message);
         return;
       }
       setLoading(false);
       setError(null);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       setLoading(false);
       setError(error.message);

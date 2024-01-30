@@ -1,6 +1,6 @@
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
-import errorhandler from "../utils/customError.js";
+import { errorhandler } from "../utils/customError.js";
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
@@ -38,7 +38,7 @@ export const signin = async (req, res, next) => {
         expires: new Date(Date.now() + 60 * 60 * 1000),
       })
       .status(200)
-      .json(userinfo);
+      .json({ success: true, userinfo });
   } catch (error) {
     next(error);
   }
