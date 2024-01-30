@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../apiCalls/user";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 function Login() {
   const [formData, setformData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
 
   const onchangeHandler = (e) => {
     setformData({
@@ -18,21 +24,17 @@ function Login() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      console.log(formData);
+      dispatch(signInStart());
       const response = await LoginUser(formData);
       console.log(response);
       if (response.success === false) {
-        setLoading(false);
-        setError(response.message);
+        dispatch(signInFailure(response.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(response.userinfo));
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   };
 
