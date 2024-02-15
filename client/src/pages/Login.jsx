@@ -7,6 +7,8 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+import GoogleAuth from "../components/GoogleAuth";
+import FacebookAuth from "../components/FacebookAuth";
 
 function Login() {
   const [formData, setformData] = useState({});
@@ -26,13 +28,15 @@ function Login() {
     try {
       dispatch(signInStart());
       const response = await LoginUser(formData);
-      console.log(response);
-      if (response.success === false) {
-        dispatch(signInFailure(response.message));
+      console.log("first", response);
+      if (response.success === true) {
+        dispatch(
+          signInSuccess({ userinfo: response.userinfo, loginMethod: "pass" })
+        );
+        navigate("/");
         return;
       }
-      dispatch(signInSuccess(response.userinfo));
-      navigate("/");
+      dispatch(signInFailure(response.message));
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -51,7 +55,7 @@ function Login() {
           onChange={onchangeHandler}
         />
         <input
-          type="text"
+          type="password"
           placeholder="password"
           id="password"
           className="border p-2 rounded-md"
@@ -63,6 +67,8 @@ function Login() {
         >
           {loading ? "loading..." : "Login"}
         </button>
+        <GoogleAuth />
+        <FacebookAuth />
         <div className="flex gap-2">
           <p>Do not Have an account?</p>
           <Link to={"/signup"}>

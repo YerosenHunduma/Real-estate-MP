@@ -6,6 +6,7 @@ function SignUP() {
   const [formData, setformData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(null);
   const navigate = useNavigate();
   const onchangeHandler = (e) => {
     setformData({
@@ -21,7 +22,8 @@ function SignUP() {
       setLoading(true);
       console.log(formData);
       const response = await RegisterUser(formData);
-      console.log(response);
+      console.log("ressss", response);
+
       if (response.success === false) {
         setLoading(false);
         setError(response.message);
@@ -29,16 +31,20 @@ function SignUP() {
       }
       setLoading(false);
       setError(null);
-      navigate("/");
+      setSuccessMsg(response.message);
+      navigate("/login");
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
   };
+  console.log(successMsg);
   return (
     <div className="p-10 mt-10 max-w-md mx-auto bg-slate-200 rounded-lg ">
       <h1 className="text-3xl text-center font-bold uppercase mb-3">SignUP</h1>
       {error && <p className="text-red-500">{error}</p>}
+      {successMsg && <p className="text-green-500">{successMsg}</p>}
+      {console.log(successMsg)}
       <form onSubmit={onSubmitHandler} className="flex flex-col gap-4">
         <input
           type="text"
@@ -55,9 +61,16 @@ function SignUP() {
           onChange={onchangeHandler}
         />
         <input
-          type="text"
+          type="password"
           placeholder="password"
           id="password"
+          className="border p-2 rounded-md"
+          onChange={onchangeHandler}
+        />
+        <input
+          type="password"
+          placeholder="Confirm password"
+          id="Cpassword"
           className="border p-2 rounded-md"
           onChange={onchangeHandler}
         />
